@@ -5,22 +5,22 @@ cask "loops" do
   on_macos do
     on_intel do
       url "https://github.com/Loops-so/cli/releases/download/v#{version}/loops_cli_darwin_x86_64.tar.gz"
-      sha256 "1330a85a994bb0ac3b623ea0cef3f2e981a7378c6d33c70d744d5a62815b433e"
+      sha256 "6aca80ff5eb49c15973a454c152c7392e180191fed4b77aab77564a119cc30db"
     end
     on_arm do
       url "https://github.com/Loops-so/cli/releases/download/v#{version}/loops_cli_darwin_arm64.tar.gz"
-      sha256 "2bb6be93a93fd82fab87aa38f560f07f73ff3bb90da5b8b4ecf5ae903c36318d"
+      sha256 "cbaa9e1206a666ddeac30b1ddfca86ced1a27e39ce26e1bf4b4ac8b39776c419"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/Loops-so/cli/releases/download/v#{version}/loops_cli_linux_x86_64.tar.gz"
-      sha256 "1ae8c044b7bdd05d9f27cfad0dd49a3d89c701670e5a7c063d9abadcdf8d6711"
+      sha256 "3b5905ab25ae6541a7e234ab1433b6604902207fa539bf92ee14ed86a80d300a"
     end
     on_arm do
       url "https://github.com/Loops-so/cli/releases/download/v#{version}/loops_cli_linux_arm64.tar.gz"
-      sha256 "64d5ae8b614adc167c8e7663369a0858933128b6094490a17c5e6cba40ea522a"
+      sha256 "cf3773f1f82d97f73a310357c947a61653c23c8a045db23cac2e535932241664"
     end
   end
 
@@ -33,6 +33,12 @@ cask "loops" do
   end
 
   binary "loops"
+
+  postflight do
+    if OS.mac?
+      system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/loops"]
+    end
+  end
 
   # No zap stanza required
 
